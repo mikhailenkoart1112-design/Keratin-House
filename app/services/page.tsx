@@ -1,16 +1,15 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import Hero from "@/components/home/Hero";
+import ServicesSection from "@/components/services/ServicesSection";
 
-export default function Home() {
+export default function ServicesPage() {
   return (
     <>
       <Header />
       <main>
-        <Hero />
+        <ServicesSection />
       </main>
       <Footer />
     </>
   );
 }
-
