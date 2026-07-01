@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import type { ReactNode } from "react";
 import {
   ArrowUpRight,
   Clock3,
@@ -11,9 +10,6 @@ import {
   Phone,
 } from "lucide-react";
 
-import AnimatedSection from "@/components/ui/AnimatedSection";
-import Container from "@/components/ui/Container";
-
 type Settings = {
   phone?: string;
   instagram?: string;
@@ -21,9 +17,6 @@ type Settings = {
   mapUrl?: string;
   workingHours?: string;
   schedule?: string;
-  bookingText?: string;
-  heroLabel?: string;
-  siteName?: string;
 };
 
 function getInstagramName(value?: string) {
@@ -111,24 +104,60 @@ export default function ContactsSection() {
     )}`;
 
   return (
-    <AnimatedSection className="bg-transparent pb-24 pt-28">
-      <Container>
+    <section
+      style={{
+        width: "100%",
+        background: "transparent",
+        paddingBottom: "96px",
+      }}
+    >
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "980px",
+          margin: "0 auto",
+          paddingLeft: "10px",
+          paddingRight: "10px",
+          boxSizing: "border-box",
+        }}
+      >
         {loading ? (
-          <div className="rounded-[32px] bg-white/95 p-7 text-center shadow-[0_24px_70px_rgba(0,0,0,0.08)] backdrop-blur-xl">
-            <Loader2 className="mx-auto animate-spin text-accent" size={28} />
+          <div
+            style={{
+              background: "#fff",
+              borderRadius: "34px",
+              padding: "32px",
+              textAlign: "center",
+              boxShadow: "0 24px 65px rgba(0,0,0,0.07)",
+            }}
+          >
+            <Loader2 className="mx-auto animate-spin text-accent" size={30} />
 
-            <h2 className="mt-4 text-2xl font-semibold tracking-[-0.05em]">
+            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.06em]">
               Завантажуємо контакти...
             </h2>
           </div>
         ) : error ? (
-          <div className="rounded-[32px] bg-red-50 p-7 text-center">
-            <p className="font-semibold text-red-500">{error}</p>
+          <div
+            style={{
+              background: "#fff1f1",
+              borderRadius: "34px",
+              padding: "32px",
+              textAlign: "center",
+            }}
+          >
+            <p style={{ fontWeight: 700, color: "#ef4444" }}>{error}</p>
           </div>
         ) : (
-          <div className="grid min-w-0 gap-4 lg:grid-cols-2">
+          <div
+            style={{
+              display: "grid",
+              gap: "24px",
+              width: "100%",
+            }}
+          >
             <ContactCard
-              icon={<MapPin size={24} />}
+              icon={<MapPin size={20} />}
               label="Адреса"
               title={address}
               text="Натисни кнопку, щоб відкрити місце на Google Maps."
@@ -138,14 +167,14 @@ export default function ContactsSection() {
             />
 
             <ContactCard
-              icon={<Clock3 size={24} />}
+              icon={<Clock3 size={20} />}
               label="Графік"
               title="Робочий час"
               text={workingHours}
             />
 
             <ContactCard
-              icon={<ArrowUpRight size={24} />}
+              icon={<ArrowUpRight size={20} />}
               label="Instagram"
               title={instagramName}
               text="Перейди в Instagram, щоб подивитися роботи та написати майстрині."
@@ -155,7 +184,7 @@ export default function ContactsSection() {
             />
 
             <ContactCard
-              icon={<Phone size={24} />}
+              icon={<Phone size={20} />}
               label="Телефон"
               title={phone}
               text="Можеш подзвонити або залишити заявку через форму запису."
@@ -163,8 +192,8 @@ export default function ContactsSection() {
             />
           </div>
         )}
-      </Container>
-    </AnimatedSection>
+      </div>
+    </section>
   );
 }
 
@@ -178,7 +207,7 @@ function ContactCard({
   external = false,
   phoneHref,
 }: {
-  icon: ReactNode;
+  icon: React.ReactNode;
   label: string;
   title: string;
   text?: string;
@@ -188,54 +217,160 @@ function ContactCard({
   phoneHref?: string;
 }) {
   return (
-    <div className="min-w-0 rounded-[30px] bg-white/95 p-5 shadow-[0_22px_60px_rgba(0,0,0,0.09)] ring-1 ring-white/80 backdrop-blur-xl sm:p-7">
-      <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#f1e6d8] text-accent">
-        {icon}
-      </div>
-
-      <p className="mt-5 break-words text-[11px] font-black uppercase tracking-[0.28em] text-accent">
-        {label}
-      </p>
-
-      <h2 className="mt-2 max-w-full break-words text-[clamp(22px,5.7vw,34px)] font-black leading-[1.08] tracking-[-0.06em] text-[#2b2826]">
-        {title}
-      </h2>
-
-      {text && (
-        <p className="mt-3 max-w-full break-words text-[15px] font-medium leading-[1.55] text-[#6f6760] sm:text-base">
-          {text}
-        </p>
-      )}
-
-      {href && buttonText && (
-        <Link
-          href={href}
-          target={external ? "_blank" : undefined}
-          className="mt-5 inline-flex max-w-full items-center justify-center rounded-full bg-accent px-5 py-3 text-[15px] font-bold text-white shadow-[0_16px_34px_rgba(201,165,122,0.35)]"
+    <article
+      style={{
+        display: "block",
+        width: "100%",
+        boxSizing: "border-box",
+        background: "#ffffff",
+        borderRadius: "34px",
+        boxShadow: "0 22px 60px rgba(0,0,0,0.07)",
+        color: "inherit",
+        overflow: "hidden",
+      }}
+    >
+      <div
+        style={{
+          width: "100%",
+          boxSizing: "border-box",
+          padding: "26px 30px 30px 30px",
+        }}
+      >
+        <div
+          style={{
+            width: "44px",
+            height: "44px",
+            borderRadius: "999px",
+            background: "#f1ebe3",
+            color: "#c9a96e",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: "18px",
+          }}
         >
-          <span className="truncate">{buttonText}</span>
-          <ArrowUpRight className="ml-2 shrink-0" size={18} />
-        </Link>
-      )}
-
-      {phoneHref && (
-        <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-          <Link
-            href={phoneHref}
-            className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#efe7dd] px-6 py-3 text-[15px] font-bold text-[#2b2826]"
-          >
-            Подзвонити
-          </Link>
-
-          <button
-            type="button"
-            onClick={() => window.dispatchEvent(new Event("open-booking"))}
-            className="min-h-12 rounded-full bg-accent px-6 py-3 text-[15px] font-bold text-white shadow-[0_16px_34px_rgba(201,165,122,0.35)]"
-          >
-            Записатися
-          </button>
+          {icon}
         </div>
-      )}
-    </div>
+
+        <p
+          style={{
+            fontSize: "12px",
+            lineHeight: "20px",
+            fontWeight: 800,
+            textTransform: "uppercase",
+            letterSpacing: "0.18em",
+            color: "#c9a96e",
+            margin: 0,
+          }}
+        >
+          {label}
+        </p>
+
+        <h2
+          style={{
+            marginTop: "16px",
+            marginBottom: 0,
+            fontSize: "27px",
+            lineHeight: "1.22",
+            fontWeight: 700,
+            letterSpacing: "-0.055em",
+            color: "#2b2826",
+            overflowWrap: "break-word",
+            wordBreak: "normal",
+          }}
+        >
+          {title}
+        </h2>
+
+        {text && (
+          <p
+            style={{
+              marginTop: "16px",
+              marginBottom: 0,
+              fontSize: "16px",
+              lineHeight: "1.75",
+              color: "#77716b",
+              overflowWrap: "break-word",
+              wordBreak: "normal",
+            }}
+          >
+            {text}
+          </p>
+        )}
+
+        {href && buttonText && (
+          <Link
+            href={href}
+            target={external ? "_blank" : undefined}
+            style={{
+              marginTop: "24px",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "8px",
+              borderRadius: "999px",
+              background: "#c9a96e",
+              padding: "13px 22px",
+              fontSize: "15px",
+              fontWeight: 800,
+              color: "#ffffff",
+              textDecoration: "none",
+              boxShadow: "0 18px 40px rgba(201,165,122,0.35)",
+            }}
+          >
+            {buttonText}
+            <ArrowUpRight size={18} />
+          </Link>
+        )}
+
+        {phoneHref && (
+          <div
+            style={{
+              display: "grid",
+              gap: "12px",
+              marginTop: "24px",
+              width: "100%",
+            }}
+          >
+            <Link
+              href={phoneHref}
+              style={{
+                width: "100%",
+                boxSizing: "border-box",
+                borderRadius: "999px",
+                background: "#f1ebe3",
+                padding: "15px 22px",
+                fontSize: "15px",
+                fontWeight: 800,
+                color: "#2b2826",
+                textAlign: "center",
+                textDecoration: "none",
+              }}
+            >
+              Подзвонити
+            </Link>
+
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new Event("open-booking"))}
+              style={{
+                width: "100%",
+                border: "none",
+                borderRadius: "999px",
+                background: "#c9a96e",
+                padding: "15px 22px",
+                fontSize: "15px",
+                fontWeight: 800,
+                color: "#ffffff",
+                cursor: "pointer",
+                boxShadow: "0 18px 40px rgba(201,165,122,0.35)",
+              }}
+            >
+              Записатися
+            </button>
+          </div>
+        )}
+      </div>
+    </article>
   );
 }

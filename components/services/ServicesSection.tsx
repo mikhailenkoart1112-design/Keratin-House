@@ -188,8 +188,8 @@ export default function ServicesSection() {
                     overflowWrap: "break-word",
                   }}
                 >
-                  Кератин, ботокс, тотальна реконструкція, холодне відновлення,
-полірування та домашній догляд.
+                  Кератин, ботокс, тотальна реконструкція, холодне
+                  відновлення, полірування та домашній догляд.
                 </p>
 
                 <button
@@ -436,72 +436,199 @@ export default function ServicesSection() {
       <AnimatePresence>
         {selectedService && (
           <motion.div
-            className="fixed inset-0 z-[90] flex items-end bg-black/35 p-3 backdrop-blur-md sm:items-center sm:justify-center"
+            onClick={() => setSelectedService(null)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 90,
+              background: "rgba(0,0,0,0.34)",
+              backdropFilter: "blur(10px)",
+              WebkitBackdropFilter: "blur(10px)",
+              display: "flex",
+              alignItems: "flex-end",
+              justifyContent: "center",
+              padding: "12px",
+            }}
           >
             <motion.div
-              className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-[34px] bg-white p-7 shadow-[0_30px_80px_rgba(0,0,0,0.18)] sm:p-8"
-              initial={{ y: 60, opacity: 0, scale: 0.96 }}
-              animate={{ y: 0, opacity: 1, scale: 1 }}
-              exit={{ y: 60, opacity: 0, scale: 0.96 }}
+              onClick={(event) => event.stopPropagation()}
+              initial={{ opacity: 0, y: 50, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 50, scale: 0.96 }}
+              transition={{ duration: 0.28, ease: "easeOut" }}
+              style={{
+                width: "100%",
+                maxWidth: "820px",
+                maxHeight: "88vh",
+                overflowY: "auto",
+                background: "#ffffff",
+                borderRadius: "34px",
+                boxShadow: "0 30px 90px rgba(0,0,0,0.25)",
+              }}
             >
-              <div className="flex items-start justify-between gap-4">
-                <div className="min-w-0">
-                  {!isConsultation(selectedService.title) && (
-                    <p className="break-words text-xs font-black uppercase tracking-[0.18em] text-[#c9a96e]">
-                      {selectedService.priceFrom}
-                    </p>
-                  )}
-
-                  {isConsultation(selectedService.title) && (
-                    <p className="break-words text-xs font-black uppercase tracking-[0.18em] text-[#c9a96e]">
-                      Безкоштовно
-                    </p>
-                  )}
-
-                  <h2 className="mt-4 break-words text-[34px] font-black leading-tight tracking-[-0.06em] text-[#2b2826] sm:text-5xl">
-                    {selectedService.title}
-                  </h2>
-                </div>
-
-                <button
-                  onClick={() => setSelectedService(null)}
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#f1ebe3]"
-                >
-                  <X size={22} />
-                </button>
-              </div>
-
-              <p className="mt-6 break-words text-base font-semibold leading-8 text-[#77716b] sm:text-lg">
-                {selectedService.fullDescription}
-              </p>
-
-              {selectedService.benefits?.length > 0 && (
-                <div className="mt-6 grid gap-2">
-                  {selectedService.benefits.map((benefit) => (
-                    <div
-                      key={benefit}
-                      className="rounded-[22px] bg-[#f8f6f2] px-4 py-3 text-sm font-bold leading-6 text-[#2b2826]"
-                    >
-                      {benefit}
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {!isConsultation(selectedService.title) && (
-                <button
-                  onClick={() => {
-                    openBookingForService(selectedService);
-                    setSelectedService(null);
+              <div
+                style={{
+                  width: "100%",
+                  boxSizing: "border-box",
+                  padding: "24px 24px 30px 24px",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    justifyContent: "space-between",
+                    gap: "16px",
                   }}
-                  className="mt-8 w-full rounded-full bg-[#c9a96e] px-6 py-4 font-black text-white shadow-[0_18px_40px_rgba(201,169,110,0.35)]"
                 >
-                  Записатися на послугу
-                </button>
-              )}
+                  <div style={{ minWidth: 0 }}>
+                    <p
+                      style={{
+                        fontSize: "12px",
+                        lineHeight: "20px",
+                        fontWeight: 800,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.18em",
+                        color: "#c9a96e",
+                        margin: 0,
+                        overflowWrap: "break-word",
+                      }}
+                    >
+                      {isConsultation(selectedService.title)
+                        ? "Безкоштовно"
+                        : selectedService.priceFrom || "DARYNA_MAKHRAIEVA"}
+                    </p>
+
+                    <h2
+                      style={{
+                        marginTop: "14px",
+                        marginBottom: 0,
+                        fontSize: "clamp(34px, 9vw, 54px)",
+                        lineHeight: "1.08",
+                        fontWeight: 800,
+                        letterSpacing: "-0.065em",
+                        color: "#2b2826",
+                        overflowWrap: "break-word",
+                      }}
+                    >
+                      {selectedService.title}
+                    </h2>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setSelectedService(null)}
+                    style={{
+                      width: "48px",
+                      height: "48px",
+                      flexShrink: 0,
+                      border: "none",
+                      borderRadius: "999px",
+                      background: "#f1ebe3",
+                      color: "#2b2826",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <X size={23} />
+                  </button>
+                </div>
+
+                <p
+                  style={{
+                    marginTop: "22px",
+                    marginBottom: 0,
+                    fontSize: "17px",
+                    lineHeight: "1.8",
+                    fontWeight: 600,
+                    color: "#77716b",
+                    overflowWrap: "break-word",
+                  }}
+                >
+                  {selectedService.shortDescription}
+                </p>
+
+                <div
+                  style={{
+                    marginTop: "26px",
+                    borderRadius: "28px",
+                    background: "#f8f6f2",
+                    padding: "22px",
+                  }}
+                >
+                  <p
+                    style={{
+                      margin: 0,
+                      whiteSpace: "pre-line",
+                      fontSize: "16px",
+                      lineHeight: "1.9",
+                      color: "#5f5954",
+                      overflowWrap: "break-word",
+                    }}
+                  >
+                    {selectedService.fullDescription}
+                  </p>
+
+                  {selectedService.benefits?.length > 0 && (
+                    <div
+                      style={{
+                        display: "grid",
+                        gap: "10px",
+                        marginTop: "22px",
+                      }}
+                    >
+                      {selectedService.benefits.map((benefit) => (
+                        <div
+                          key={benefit}
+                          style={{
+                            borderRadius: "999px",
+                            background: "#ffffff",
+                            padding: "12px 16px",
+                            fontSize: "15px",
+                            lineHeight: "1.45",
+                            fontWeight: 800,
+                            color: "#2b2826",
+                            overflowWrap: "break-word",
+                          }}
+                        >
+                          {benefit}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {!isConsultation(selectedService.title) && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      openBookingForService(selectedService);
+                      setSelectedService(null);
+                    }}
+                    style={{
+                      width: "100%",
+                      minHeight: "56px",
+                      border: "none",
+                      borderRadius: "999px",
+                      background: "#c9a96e",
+                      padding: "16px 22px",
+                      marginTop: "26px",
+                      fontSize: "16px",
+                      fontWeight: 900,
+                      color: "#ffffff",
+                      cursor: "pointer",
+                      boxShadow: "0 18px 40px rgba(201,165,122,0.35)",
+                    }}
+                  >
+                    Записатися на послугу
+                  </button>
+                )}
+              </div>
             </motion.div>
           </motion.div>
         )}
