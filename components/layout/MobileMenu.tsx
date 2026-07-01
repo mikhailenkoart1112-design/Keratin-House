@@ -25,6 +25,11 @@ export default function MobileMenu({ open, onClose, nav, onBooking }: Props) {
     return pathname.startsWith(href);
   }
 
+  function handleBooking() {
+    onClose();
+    onBooking();
+  }
+
   return (
     <AnimatePresence>
       {open && (
@@ -52,12 +57,13 @@ export default function MobileMenu({ open, onClose, nav, onBooking }: Props) {
             <Link
               href="/"
               onClick={onClose}
-              className="block truncate pl-1 text-sm font-black uppercase tracking-[0.28em] text-[#2b2826]"
+              className="block truncate pl-1 text-[13px] font-black uppercase tracking-[0.26em] text-[#2b2826]"
             >
               daryna_makhraieva
             </Link>
 
             <motion.button
+              type="button"
               onClick={onClose}
               whileTap={{ scale: 0.92 }}
               whileHover={{ scale: 1.06 }}
@@ -67,7 +73,7 @@ export default function MobileMenu({ open, onClose, nav, onBooking }: Props) {
             </motion.button>
           </div>
 
-          <div className="relative z-10 mt-14 flex flex-col gap-3">
+          <div className="relative z-10 mt-10 flex flex-col gap-2">
             {nav.map((item, index) => {
               const active = isActive(item.href);
 
@@ -77,12 +83,12 @@ export default function MobileMenu({ open, onClose, nav, onBooking }: Props) {
                   initial={{ opacity: 0, x: -18, filter: "blur(8px)" }}
                   animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                   transition={{ delay: index * 0.06, duration: 0.35 }}
-                  whileHover={{ x: 8 }}
+                  whileHover={{ x: 6 }}
                 >
                   <Link
                     href={item.href}
                     onClick={onClose}
-                    className={`group relative flex min-h-[58px] items-center justify-between overflow-hidden rounded-[28px] py-3 pl-7 pr-5 text-[40px] font-semibold leading-none tracking-[-0.06em] transition duration-300 sm:text-5xl ${
+                    className={`group relative flex min-h-[50px] items-center justify-between overflow-hidden rounded-[24px] py-2.5 pl-5 pr-5 text-[32px] font-bold leading-[1.02] tracking-[-0.065em] transition duration-300 sm:text-[40px] ${
                       active
                         ? "bg-white text-[#2b2826] shadow-[0_22px_60px_rgba(62,45,25,0.10)]"
                         : "text-[#2b2826]/80 hover:bg-white hover:text-[#2b2826] hover:shadow-[0_22px_60px_rgba(62,45,25,0.10)]"
@@ -91,7 +97,7 @@ export default function MobileMenu({ open, onClose, nav, onBooking }: Props) {
                     <span className="relative z-10">{item.label}</span>
 
                     <span
-                      className={`relative z-10 h-3 w-3 shrink-0 rounded-full transition ${
+                      className={`relative z-10 h-2.5 w-2.5 shrink-0 rounded-full transition ${
                         active
                           ? "bg-[#c9a96e]"
                           : "bg-[#c9a96e]/0 group-hover:bg-[#c9a96e]"
@@ -106,13 +112,14 @@ export default function MobileMenu({ open, onClose, nav, onBooking }: Props) {
           </div>
 
           <motion.button
-            onClick={onBooking}
+            type="button"
+            onClick={handleBooking}
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35 }}
             whileTap={{ scale: 0.96 }}
             whileHover={{ y: -3 }}
-            className="absolute bottom-8 left-5 right-5 z-10 rounded-full bg-accent px-6 py-4 font-black text-white shadow-[0_18px_40px_rgba(201,165,122,0.35)]"
+            className="absolute bottom-8 left-5 right-5 z-10 rounded-full bg-accent px-6 py-4 text-lg font-black text-white shadow-[0_18px_40px_rgba(201,165,122,0.35)]"
           >
             Записатися
           </motion.button>

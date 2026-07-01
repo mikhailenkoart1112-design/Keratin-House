@@ -216,16 +216,17 @@ export default function GallerySection() {
   }, []);
 
   const works = useMemo(
-    () =>
-      gallery
-        .filter((item) => getActive(item))
-        .filter((item) => {
-          const category = getCategory(item);
-          return category === "work" || category === "works";
-        })
-        .sort((a, b) => getOrder(a) - getOrder(b)),
-    [gallery]
-  );
+  () =>
+    gallery
+      .filter((item) => getActive(item))
+      .filter((item) => {
+        const category = getCategory(item);
+        return category === "work" || category === "works";
+      })
+      .filter((item) => getDisplayImage(item))
+      .sort((a, b) => getOrder(a) - getOrder(b)),
+  [gallery]
+);
 
   const beforeAfter = useMemo(
     () =>

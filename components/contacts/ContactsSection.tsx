@@ -97,7 +97,8 @@ export default function ContactsSection() {
   const address = settings.address || "м. Хмельницький";
   const workingHours =
     settings.workingHours || settings.schedule || "Пн–Сб 10:00–16:00";
-  const instagram = settings.instagram || "https://instagram.com/daryna_makhraieva";
+  const instagram =
+    settings.instagram || "https://instagram.com/daryna_makhraieva";
   const phone = settings.phone || "+380 99 123 45 68";
 
   const instagramName = useMemo(() => getInstagramName(instagram), [instagram]);
@@ -110,24 +111,24 @@ export default function ContactsSection() {
     )}`;
 
   return (
-    <AnimatedSection className="bg-transparent py-20">
+    <AnimatedSection className="bg-transparent pb-24 pt-28">
       <Container>
         {loading ? (
-          <div className="rounded-[36px] bg-white/90 p-8 text-center shadow-[0_24px_70px_rgba(0,0,0,0.07)] backdrop-blur-xl">
+          <div className="rounded-[32px] bg-white/95 p-7 text-center shadow-[0_24px_70px_rgba(0,0,0,0.08)] backdrop-blur-xl">
             <Loader2 className="mx-auto animate-spin text-accent" size={28} />
 
-            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.06em]">
+            <h2 className="mt-4 text-2xl font-semibold tracking-[-0.05em]">
               Завантажуємо контакти...
             </h2>
           </div>
         ) : error ? (
-          <div className="rounded-[36px] bg-red-50 p-8 text-center">
+          <div className="rounded-[32px] bg-red-50 p-7 text-center">
             <p className="font-semibold text-red-500">{error}</p>
           </div>
         ) : (
           <div className="grid min-w-0 gap-4 lg:grid-cols-2">
             <ContactCard
-              icon={<MapPin size={26} />}
+              icon={<MapPin size={24} />}
               label="Адреса"
               title={address}
               text="Натисни кнопку, щоб відкрити місце на Google Maps."
@@ -137,14 +138,14 @@ export default function ContactsSection() {
             />
 
             <ContactCard
-              icon={<Clock3 size={26} />}
+              icon={<Clock3 size={24} />}
               label="Графік"
               title="Робочий час"
               text={workingHours}
             />
 
             <ContactCard
-              icon={<ArrowUpRight size={26} />}
+              icon={<ArrowUpRight size={24} />}
               label="Instagram"
               title={instagramName}
               text="Перейди в Instagram, щоб подивитися роботи та написати майстрині."
@@ -154,7 +155,7 @@ export default function ContactsSection() {
             />
 
             <ContactCard
-              icon={<Phone size={26} />}
+              icon={<Phone size={24} />}
               label="Телефон"
               title={phone}
               text="Можеш подзвонити або залишити заявку через форму запису."
@@ -187,21 +188,21 @@ function ContactCard({
   phoneHref?: string;
 }) {
   return (
-    <div className="min-w-0 overflow-hidden rounded-[34px] bg-white/88 p-5 shadow-[0_24px_70px_rgba(0,0,0,0.08)] backdrop-blur-xl sm:p-7">
-      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#f1e6d8] text-accent">
+    <div className="min-w-0 rounded-[30px] bg-white/95 p-5 shadow-[0_22px_60px_rgba(0,0,0,0.09)] ring-1 ring-white/80 backdrop-blur-xl sm:p-7">
+      <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#f1e6d8] text-accent">
         {icon}
       </div>
 
-      <p className="mt-7 break-words text-[11px] font-black uppercase tracking-[0.34em] text-accent">
+      <p className="mt-5 break-words text-[11px] font-black uppercase tracking-[0.28em] text-accent">
         {label}
       </p>
 
-      <h2 className="mt-3 max-w-full break-words text-[clamp(30px,8vw,48px)] font-black leading-[1.02] tracking-[-0.075em] text-[#2b2826]">
+      <h2 className="mt-2 max-w-full break-words text-[clamp(22px,5.7vw,34px)] font-black leading-[1.08] tracking-[-0.06em] text-[#2b2826]">
         {title}
       </h2>
 
       {text && (
-        <p className="mt-4 max-w-full break-words text-[16px] leading-[1.55] text-secondary sm:text-lg">
+        <p className="mt-3 max-w-full break-words text-[15px] font-medium leading-[1.55] text-[#6f6760] sm:text-base">
           {text}
         </p>
       )}
@@ -210,7 +211,7 @@ function ContactCard({
         <Link
           href={href}
           target={external ? "_blank" : undefined}
-          className="mt-6 inline-flex max-w-full items-center justify-center rounded-full bg-accent px-5 py-3 text-base font-semibold text-white shadow-[0_18px_40px_rgba(201,165,122,0.35)]"
+          className="mt-5 inline-flex max-w-full items-center justify-center rounded-full bg-accent px-5 py-3 text-[15px] font-bold text-white shadow-[0_16px_34px_rgba(201,165,122,0.35)]"
         >
           <span className="truncate">{buttonText}</span>
           <ArrowUpRight className="ml-2 shrink-0" size={18} />
@@ -218,10 +219,10 @@ function ContactCard({
       )}
 
       {phoneHref && (
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row">
           <Link
             href={phoneHref}
-            className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#efe7dd] px-6 py-3 text-base font-semibold text-[#2b2826]"
+            className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#efe7dd] px-6 py-3 text-[15px] font-bold text-[#2b2826]"
           >
             Подзвонити
           </Link>
@@ -229,7 +230,7 @@ function ContactCard({
           <button
             type="button"
             onClick={() => window.dispatchEvent(new Event("open-booking"))}
-            className="min-h-12 rounded-full bg-accent px-6 py-3 text-base font-semibold text-white shadow-[0_18px_40px_rgba(201,165,122,0.35)]"
+            className="min-h-12 rounded-full bg-accent px-6 py-3 text-[15px] font-bold text-white shadow-[0_16px_34px_rgba(201,165,122,0.35)]"
           >
             Записатися
           </button>

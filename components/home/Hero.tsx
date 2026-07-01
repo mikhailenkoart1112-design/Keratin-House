@@ -1,70 +1,82 @@
+﻿/* eslint-disable @next/next/no-img-element */
+
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function Hero() {
-  const openBooking = () => {
+  function openBooking() {
     window.dispatchEvent(new Event("open-booking"));
-  };
+  }
 
   return (
-    <section
-      className="relative min-h-screen overflow-hidden bg-[#f8f6f2] bg-cover bg-center px-4 pb-16 pt-28 sm:px-6 lg:px-10"
-      style={{
-        backgroundImage: "url('/images/home-bg.jpg')",
-      }}
-    >
-      <div className="absolute inset-0 bg-[#f8f6f2]/35" />
-      <div className="absolute inset-0 bg-gradient-to-b from-white/25 via-[#f8f6f2]/20 to-[#f8f6f2]/60" />
+    <section className="relative min-h-screen overflow-hidden px-4 pb-16 pt-32">
+      <div className="absolute inset-0 -z-20">
+        <img
+          src="/images/home-bg.jpg"
+          alt="Keratin House"
+          className="h-full w-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-[#f8f6f2]/62" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-[#f8f6f2]/20 to-[#f8f6f2]/95" />
+      </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 0.65, ease: "easeOut" }}
-        className="relative z-10 mx-auto flex min-h-[calc(100vh-150px)] w-full max-w-7xl items-center justify-center text-center"
-      >
-        <div className="mx-auto flex w-full max-w-5xl flex-col items-center">
-          <div className="mb-7 inline-flex items-center gap-2 rounded-full bg-white/85 px-4 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-[#c9a96e] shadow-[0_18px_40px_rgba(0,0,0,0.06)] backdrop-blur-xl sm:px-5 sm:py-2.5 sm:text-xs">
-            <Sparkles size={15} />
-            DARYNA_MAKHRAIEVA
-          </div>
+      <div className="mx-auto flex min-h-[72vh] w-full max-w-5xl flex-col items-center justify-center text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 18, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.55 }}
+          className="inline-flex items-center gap-2 rounded-full bg-white/75 px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-accent shadow-[0_18px_45px_rgba(0,0,0,0.08)] backdrop-blur-xl"
+        >
+          <Sparkles size={16} />
+          Daryna Makhraieva
+        </motion.div>
 
-          <h1 className="mx-auto max-w-[1100px] text-center text-[42px] font-black leading-[0.95] tracking-[-0.075em] text-[#2b2826] sm:text-7xl lg:text-[96px] xl:text-[112px]">
-            daryna makhraieva
-          </h1>
+        <motion.h1
+  initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
+  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+  transition={{ duration: 0.65, delay: 0.08 }}
+  className="mt-5 max-w-4xl text-[clamp(42px,10.5vw,86px)] font-extrabold lowercase leading-[0.9] tracking-[-0.075em] text-[#2b2826]/90"
+>
+  daryna
+  <br />
+  makhraieva
+</motion.h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-center text-[17px] font-semibold leading-8 text-[#6f6963] sm:text-xl lg:text-2xl">
-            Відновлення, кератин, ботокс та догляд за волоссям.
-          </p>
+        <motion.p
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.16 }}
+          className="mt-5 max-w-xl text-[19px] font-semibold leading-[1.45] tracking-[-0.035em] text-[#6f6760] sm:text-2xl"
+        >
+          Відновлення, кератин, ботокс та догляд за волоссям.
+        </motion.p>
 
-          <div className="mx-auto mt-9 grid w-full max-w-md gap-3 sm:flex sm:max-w-2xl sm:items-center sm:justify-center sm:gap-4">
-            <motion.button
-              onClick={openBooking}
-              whileHover={{ y: -2, scale: 1.02 }}
-              whileTap={{ scale: 0.96 }}
-              className="inline-flex min-h-[54px] w-full items-center justify-center rounded-full bg-[#c9a96e] px-8 py-4 text-base font-black text-white shadow-[0_20px_45px_rgba(201,169,110,0.35)] sm:w-auto sm:min-w-[220px] lg:min-h-[58px] lg:px-10 lg:text-lg"
-            >
-              Записатися
-              <ArrowRight className="ml-2" size={20} />
-            </motion.button>
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.24 }}
+          className="mt-8 grid w-full max-w-2xl gap-4"
+        >
+          <button
+            type="button"
+            onClick={openBooking}
+            className="flex h-16 items-center justify-center rounded-full bg-accent px-7 text-xl font-bold text-white shadow-[0_22px_55px_rgba(201,165,122,0.38)] transition active:scale-[0.98]"
+          >
+            Записатися
+            <ArrowRight className="ml-2" size={22} />
+          </button>
 
-            <motion.div
-              whileHover={{ y: -2, scale: 1.02 }}
-              whileTap={{ scale: 0.96 }}
-              className="w-full sm:w-auto"
-            >
-              <Link
-                href="/gallery"
-                className="inline-flex min-h-[54px] w-full items-center justify-center rounded-full bg-white/90 px-8 py-4 text-base font-black text-[#2b2826] shadow-[0_18px_40px_rgba(0,0,0,0.07)] backdrop-blur-xl sm:w-auto sm:min-w-[220px] lg:min-h-[58px] lg:px-10 lg:text-lg"
-              >
-                Наші роботи
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </motion.div>
+          <Link
+            href="/gallery"
+            className="flex h-16 items-center justify-center rounded-full bg-white/88 px-7 text-xl font-black text-[#2b2826] shadow-[0_22px_55px_rgba(0,0,0,0.08)] backdrop-blur-xl transition active:scale-[0.98]"
+          >
+            Мої роботи
+          </Link>
+        </motion.div>
+      </div>
     </section>
   );
 }
