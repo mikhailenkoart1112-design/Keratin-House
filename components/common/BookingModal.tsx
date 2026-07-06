@@ -56,6 +56,14 @@ type ExistingBooking = {
   status?: string;
 };
 
+type BusySlot = {
+  id?: string;
+  date?: string;
+  time?: string;
+  reason?: string;
+  active?: boolean | string;
+};
+
 const hairLengths: HairLength[] = [
   "До 30 см",
   "До 40 см",
@@ -196,6 +204,8 @@ function parseDateValue(value?: string) {
 function parseTimeValue(value?: string) {
   if (!value) return "";
 
+  if (value === "ALL_DAY") return "ALL_DAY";
+
   if (/^\d{2}:\d{2}$/.test(value)) {
     return value;
   }
@@ -249,6 +259,16 @@ function isPastDate(value: string) {
   return value < toDateValue(new Date());
 }
 
+function isActiveBusySlot(value: boolean | string | undefined) {
+  if (value === undefined) return true;
+  if (value === true) return true;
+  if (value === false) return false;
+
+  const text = String(value).trim().toUpperCase();
+
+  return text === "TRUE" || text === "YES" || text === "1";
+}
+
 export default function BookingModal({
   open,
   onClose,
@@ -263,6 +283,7 @@ export default function BookingModal({
   const [time, setTime] = useState("");
   const [comment, setComment] = useState("");
   const [bookings, setBookings] = useState<ExistingBooking[]>([]);
+  const [busySlots, setBusySlots] = useState<BusySlot[]>([]);
   const [activeMonthIndex, setActiveMonthIndex] = useState(0);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
@@ -325,7 +346,26 @@ export default function BookingModal({
       }
     };
 
+    const loadBusySlots = async () => {
+      try {
+        const response = await fetch("/api/busy-slots", {
+          method: "GET",
+          cache: "no-store",
+        });
+
+        const result = await response.json();
+
+        const list =
+          result.busySlots || result.slots || result.data || result.items || [];
+
+        setBusySlots(Array.isArray(list) ? list : []);
+      } catch {
+        setBusySlots([]);
+      }
+    };
+
     loadBookings();
+    loadBusySlots();
   }, [open]);
 
   const months = useMemo(() => getMonths(), []);
@@ -359,8 +399,27 @@ export default function BookingModal({
       map[bookingDate].push(bookingTime);
     });
 
+    busySlots.forEach((slot) => {
+      if (!isActiveBusySlot(slot.active)) return;
+
+      const slotDate = parseDateValue(slot.date);
+      const slotTime = parseTimeValue(slot.time);
+
+      if (!slotDate || !slotTime) return;
+
+      if (!map[slotDate]) {
+        map[slotDate] = [];
+      }
+
+      map[slotDate].push(slotTime);
+    });
+
+    Object.keys(map).forEach((key) => {
+      map[key] = Array.from(new Set(map[key]));
+    });
+
     return map;
-  }, [bookings]);
+  }, [bookings, busySlots]);
 
   const totalPrice = useMemo(() => {
     return selectedServices.reduce((sum, service) => {
@@ -422,6 +481,13 @@ export default function BookingModal({
       !time
     ) {
       setError("Заповніть імʼя, контакт, послуги, довжину, день та час.");
+      return;
+    }
+
+    const busy = busyTimesByDate[date] || [];
+
+    if (busy.includes("ALL_DAY") || busy.includes(time)) {
+      setError("Цей час уже зайнятий. Оберіть інший день або час.");
       return;
     }
 
@@ -606,8 +672,8 @@ export default function BookingModal({
                       <div className="grid gap-2">
                         {services.map((service) => {
                           const selected = selectedServices.some(
-                            (item) => item.title === service.title
-                          );
+  (item) => item.title === service.title
+);
 
                           const price = getServicePrice(service, hairLength);
 
@@ -767,8 +833,12 @@ export default function BookingModal({
                         const isSunday = day.getDay() === 0;
                         const isPast = isPastDate(value);
                         const busy = busyTimesByDate[value] || [];
+                        const allDayBusy = busy.includes("ALL_DAY");
                         const fullyBusy =
-                          busy.length >= allTimes.length && !isSunday;
+                          allDayBusy ||
+                          (busy.filter((item) => item !== "ALL_DAY").length >=
+                            allTimes.length &&
+                            !isSunday);
                         const disabled = isPast || isSunday || fullyBusy;
                         const active = date === value;
 
@@ -805,7 +875,9 @@ export default function BookingModal({
                         <div className="grid grid-cols-3 gap-2">
                           {allTimes.map((availableTime) => {
                             const busy = busyTimesByDate[date] || [];
-                            const isBusy = busy.includes(availableTime);
+                            const allDayBusy = busy.includes("ALL_DAY");
+                            const isBusy =
+                              allDayBusy || busy.includes(availableTime);
                             const active = time === availableTime;
 
                             return (
